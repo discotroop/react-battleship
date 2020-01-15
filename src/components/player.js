@@ -6,6 +6,7 @@ function Player() {
     return {
         playersBoard: GameBoard(), 
         isHuman: false,
+        isTurn: false,
         randomNumber: function () {
             let result = Math.random()*10;
             result = Math.round(result);

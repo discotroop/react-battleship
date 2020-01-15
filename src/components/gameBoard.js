@@ -1,8 +1,6 @@
 import React from 'react';
 import Ship from './ship'
 
-const carrier = new Ship(5);
-
 function GameBoard() {
     const letters = new Array(8);
 
@@ -13,14 +11,29 @@ function GameBoard() {
         return letters;
     }
 
-    function placeShip (noseX, noseY, length, direction) {
-        return this.board[0][1] = "s";
-    }
+    function buildFleet () {
+        return [
+            Ship(5),
+            Ship(4),
+            Ship(3),
+            Ship(3),
+            Ship(2)
+        ]
+    }    
 
+    // isSunk: function() {
+    //     if (this.hits.includes(undefined)) {
+    //         console.log("floating")
+    //     } else {
+    //         this.sunk = "Y";
+    //     }
 
     return {
         board: drawGrid(),
-        ships: "",
+        fleet: buildFleet(),
+        fleetStatus: "Y",
+
+        // handy helpers
         setShip: function (x, y) {
             return this.board[x][y] = "s";
         },
@@ -30,34 +43,41 @@ function GameBoard() {
         setMiss: function (x, y) {
             return this.board[x][y] = "m"; 
         },
+        test(x, y, letters) {
+            return this.board[x][y] = letters;
+        },
+
         recievedAttack: function (x, y) {
             let target = this.board[x][y];
             if (target === "s") {
                 target = this.setHit(x, y);
+                this.hasFleet();
             } else {
                target = this.setMiss(x, y);
             }
             return
         },
-        test(x, y, letters) {
-            return this.board[x][y] = letters;
-        },
+
         placeShip: function (x, y, direction, length) {
+        // up
             if (direction === "up") {
                 let end = y - length;
                 for (let i = y; i > end; i--) {
                     this.setShip(x, i);
                 }
+        // down
             } else if (direction === "down") {
                 let end = y + length;
                 for (let i = y; i < end; i++) {
                     this.setShip(x, i);
                 }
+        // left
             } else if (direction === "left") {
                 let end = x - length;
                 for (let i = x; i > end; i--) {
                     this.setShip(i, y);
                 }
+        // right 
             } else if (direction === "right") {
                 let end = x + length;
                 for (let i = x; i < end; i++) {
@@ -67,6 +87,17 @@ function GameBoard() {
             return;
         },
 
+        hasFleet: function () {
+            let status = []
+            for (let i = 0; i < this.fleet.length; i++) {
+                status.push(this.fleet[i].sunk);
+            }
+            if (status.includes("N")) {
+                this.fleetStatus = "Y"
+            } else {
+                this.fleetStatus = "N"
+            }
+        }
     };
 }
 

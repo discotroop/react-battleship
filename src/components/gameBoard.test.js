@@ -45,9 +45,6 @@ test.todo("ship placement cannot overlap with other ships")
 
 
 
-
-
-
 // Tracking Hits and Misses
 test("it tracks hits on the board", () => {
     sampleBoard.test(0, 1, "s")
@@ -58,4 +55,18 @@ test("it tracks hits on the board", () => {
 test("it tracks misses on the board", () => {
     sampleBoard.recievedAttack(2, 2);
     expect(sampleBoard.board[2][2]).toBe("m");
+});
+
+
+// Tracking Fleet Status
+test("fleet status is 'Y' while a ship is afloat", () => {
+    sampleBoard.fleet = [sampleShip]
+    expect(sampleBoard.fleetStatus).toBe("Y");
+});
+
+test("fleet status is 'N' when all ships sunk", () => {
+    sampleBoard.fleet = [sampleShip];
+    sampleBoard.fleet[0].sunk = "Y";
+    sampleBoard.hasFleet();
+    expect(sampleBoard.fleetStatus).toBe("N");
 })

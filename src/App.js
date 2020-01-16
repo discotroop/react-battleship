@@ -12,24 +12,30 @@ import GameBoard from './components/gameBoard';
 
 
 // this will be a class 
-function drawBoard() {
-  return (
-    <div className="board">
-      {console.log("here there be grids")}
-    </div>
-  )
-}
-
 
 function App() {
-
   return (
     <div className="App">
-      <header className="App-header">
-        battle ship
-      </header>
+        <div className="Human">
+          <Board />
+        </div>
+        <div className="Computer">
+          <Board />
+        </div>
     </div>
   );
+}
+
+class Board extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      // grid
+      // hits
+      // misses
+      // ship positions
+    }
+  }
 }
 
 export default App;

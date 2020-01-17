@@ -16,26 +16,46 @@ import GameBoard from './components/gameBoard';
 function App() {
   return (
     <div className="App">
-        <div className="Human">
+      <div className="boards">
+        <div> Player 1 
           <Board />
         </div>
-        <div className="Computer">
+        <div> Player 2 (ai)
           <Board />
         </div>
+      </div>
     </div>
   );
 }
 
 class Board extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      // grid
-      // hits
-      // misses
-      // ship positions
     }
   }
+
+  square(Xcoord, Ycoord) {
+    return <div className="square" key={[Xcoord, Ycoord]}> {Xcoord} {Ycoord} </div>
+  }
+
+  buildSquares(props) {
+    let gameGrid = [];
+
+    for (let i = 0; i < props; i++) {
+      for (let j = 0; j < props; j++) {
+        gameGrid.push(this.square(i, j));
+      }
+    }
+    return gameGrid;
+  }
+
+  render() {
+    return <div className="board">
+      {this.buildSquares(8)}
+     </div>
+  }
 }
+
 
 export default App;

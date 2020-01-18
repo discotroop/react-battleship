@@ -53,16 +53,12 @@ function GameBoard() {
 
         recievedAttack: function (x, y) {
             let target = this.board[x][y];
-            console.log("target", target);
             if (target === "s") {
                 target = this.setHit(x, y);
-                console.log("hits")
                 this.hasFleet();
             } else {
                target = this.setMiss(x, y);
-               console.log("miss")
             }
-            console.log(this.board)
             return
         },
 
@@ -92,7 +88,6 @@ function GameBoard() {
                     this.setShip(i, y);
                 }
             }
-            console.log(this.board)
             return;
         },
 

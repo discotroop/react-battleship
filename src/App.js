@@ -18,10 +18,10 @@ function App() {
     <div className="App">
       <div className="boards">
         <div> Player 1 
-          <Board />
+          <Board player="player1" />
         </div>
         <div> Player 2 (ai)
-          <Board />
+          <Board player="player2"/>
         </div>
       </div>
     </div>
@@ -32,11 +32,25 @@ class Board extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      player: props.player,
+      boardData: GameBoard(),
     }
   }
+  squareClicked(e) {
+    let x = e.target.attributes.data.value[0] * 1;
+    let y = e.target.attributes.data.value[0] * 1;
+    this.state.boardData.recievedAttack(x, y);
+  }
+
+  handleClick = (event) => {
+    // const { target: { value } } = event;
+    console.log(event)
+    // And do whatever you need with it's value, for example change state 
+    // this.setState({ someProperty: value });
+};
 
   square(Xcoord, Ycoord) {
-    return <div className="square" key={[Xcoord, Ycoord]}> {Xcoord} {Ycoord} </div>
+    return <div className="square" onClick={(e) => this.squareClicked(e)} key={[Xcoord, Ycoord]} data={[Xcoord,Ycoord]} > {Xcoord} {Ycoord} </div>
   }
 
   buildSquares(props) {

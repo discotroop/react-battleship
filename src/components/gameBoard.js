@@ -51,9 +51,11 @@ function GameBoard() {
             let target = this.board[x][y];
             if (target === "s") {
                 target = this.setHit(x, y);
+                console.log("hits")
                 this.hasFleet();
             } else {
                target = this.setMiss(x, y);
+               console.log("miss")
             }
             return
         },

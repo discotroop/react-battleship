@@ -6,7 +6,11 @@ function GameBoard() {
 
     function drawGrid () {
         for (let i = 0; i < letters.length; i++) {
-            letters[i] = new Array(8);
+            let temp = []
+            for (let j = 0; j < letters.length; j++) {
+                temp.push(j);
+            }
+            letters[i]=temp;
         }
         return letters;
     }
@@ -49,6 +53,7 @@ function GameBoard() {
 
         recievedAttack: function (x, y) {
             let target = this.board[x][y];
+            console.log("target", target);
             if (target === "s") {
                 target = this.setHit(x, y);
                 console.log("hits")
@@ -57,6 +62,7 @@ function GameBoard() {
                target = this.setMiss(x, y);
                console.log("miss")
             }
+            console.log(this.board)
             return
         },
 
@@ -86,6 +92,7 @@ function GameBoard() {
                     this.setShip(i, y);
                 }
             }
+            console.log(this.board)
             return;
         },
 

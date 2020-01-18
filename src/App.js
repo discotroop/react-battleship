@@ -38,9 +38,12 @@ class Board extends React.Component {
   }
   squareClicked(e) {
     let x = e.target.attributes.data.value[0] * 1;
-    let y = e.target.attributes.data.value[0] * 1;
+    let y = e.target.attributes.data.value[2] * 1;
+    this.state.boardData.placeShip(1, 1, "down", 1)
+
     this.state.boardData.recievedAttack(x, y);
   }
+
 
   handleClick = (event) => {
     // const { target: { value } } = event;

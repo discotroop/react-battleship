@@ -36,42 +36,71 @@ class Board extends React.Component {
     }
   }
   squareClicked(e) {
-    console.log(e.target)
     let x = e.target.attributes.data.value[0] * 1;
     let y = e.target.attributes.data.value[2] * 1;
     this.state.boardData.placeShip(1, 1, "down", 1)
+    console.log(e.target)
 
     this.state.boardData.recievedAttack(x, y);
+    console.log(this.state.boardData.board)
   }
 
-  square(Xcoord, Ycoord) {
-    return <div className="square" onClick={(e) => this.squareClicked(e)} key={[Xcoord, Ycoord]} data={[Xcoord,Ycoord]} > {Xcoord} {Ycoord} </div>
+  square(Xcoord, Ycoord, someValue) {
+    return <div className="square" value={someValue} onClick={(e) => 
+      this.squareClicked(e)} 
+      key={[Xcoord, Ycoord]} 
+      data={[Xcoord,Ycoord]}>
+         {Xcoord} {Ycoord} 
+      </div>
   }
 
   buildSquares(props) {
-    let gameGrid = [];
+    let gameGrid = []
+    let homeArray = this.state.boardData.board;
+    console.log(homeArray);
 
-    for (let i = 0; i < props; i++) {
-      for (let j = 0; j < props; j++) {
-        gameGrid.push(this.square(i, j));
+    for (let i = 0; i < homeArray.length; i++) {
+      for (let j = 0; j < homeArray[i].length; j++) {
+        gameGrid.push(this.square(i, j, homeArray[i][j]));
       }
     }
     return gameGrid;
   }
 
-  buildShips(props) {
-    let test = document.querySelector(".square[data='1,0']")
-    console.log(test);
-    console.log(this.square.key)
+  // square(Xcoord, Ycoord) {
+  //   return <div className="square" onClick={(e) => this.squareClicked(e)} key={[Xcoord, Ycoord]} data={[Xcoord,Ycoord]} > {Xcoord} {Ycoord} </div>
+  // }
+
+  // buildSquares(props) {
+  //   let gameGrid = [];
+
+  //   for (let i = 0; i < props; i++) {
+  //     for (let j = 0; j < props; j++) {
+  //       gameGrid.push(this.square(i, j));
+  //     }
+  //   }
+  //   return gameGrid;
+  // }
+
+  buildShip(x, y) {
+    window.addEventListener("load",function() {
+      let selected = document.querySelector(`.square[data="${x},${y}"]`);
+      selected.className = "ship";
+    });  
+    this.state.boardData.setShip(x, y)
+    // console.log(this.state.boardData.board)
+  }
+
+  buildShips() {
+    this.buildShip(0, 1) 
   }
 
   render() {
-    return <div className="board">
+    return <div className="board" >
       {this.buildSquares(8)}
       {this.buildShips()}
      </div>
   }
 }
-
 
 export default App;

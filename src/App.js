@@ -8,9 +8,9 @@ import GameBoard from './components/gameBoard';
   // lay ships on field
   // start static
 // set up gameplay loop between ai and human player
-// hook up whole thing to a dom so we can see what's happening
-// write more tests
 // import everything to app and execute 
+
+// fix x-y direction on placing ships
 
 function App() {
   return (
@@ -46,6 +46,8 @@ class Board extends React.Component {
 
   initShips() {
     this.state.boardData.placeShip(1, 1, "down", 5)
+    this.state.boardData.placeShip(7, 7, "left", 2)
+
   }
 
   buildShips() {

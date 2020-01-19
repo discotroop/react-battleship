@@ -17,7 +17,7 @@
 }
 
 .square {
-  background-color: lightsalmon;
+  background-color: lightskyblue;
 }
 
 .square:hover {
@@ -26,4 +26,12 @@
 
 .ship {
   background-color: grey;
+}
+
+.hit {
+  background-color: red;
+}
+
+.miss {
+  background-color: darkblue;
 }

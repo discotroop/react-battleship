@@ -35,14 +35,21 @@ class Board extends React.Component {
       boardData: GameBoard(),
     }
   }
-  squareClicked(e) {
-    let x = e.target.attributes.data.value[0] * 1;
-    let y = e.target.attributes.data.value[2] * 1;
-    this.state.boardData.placeShip(1, 1, "down", 1)
-    console.log(e.target)
 
-    this.state.boardData.recievedAttack(x, y);
-    console.log(this.state.boardData.board)
+  buildShip(x, y) {
+    window.addEventListener("load",function() {
+      let selected = document.querySelector(`.square[data="${x},${y}"]`);
+      selected.className = "ship";
+    });  
+    this.state.boardData.setShip(x, y)
+  }
+
+  initShips() {
+    this.state.boardData.placeShip(1, 1, "down", 5)
+  }
+
+  buildShips() {
+    this.buildShip(5, 5) 
   }
 
   square(Xcoord, Ycoord, someValue) {
@@ -54,6 +61,16 @@ class Board extends React.Component {
       </div>
   }
 
+  shipSquare(Xcoord, Ycoord, someValue) {
+    return <div className="ship" value={someValue} onClick={(e) => 
+      this.squareClicked(e)} 
+      key={[Xcoord, Ycoord]} 
+      data={[Xcoord,Ycoord]}>
+         {Xcoord} {Ycoord} 
+      </div>
+  }
+
+
   buildSquares(props) {
     let gameGrid = []
     let homeArray = this.state.boardData.board;
@@ -61,42 +78,33 @@ class Board extends React.Component {
 
     for (let i = 0; i < homeArray.length; i++) {
       for (let j = 0; j < homeArray[i].length; j++) {
+        if (homeArray[i][j] === "s") {
+          gameGrid.push(this.shipSquare(i, j, homeArray[i][j]));
+        } else {
         gameGrid.push(this.square(i, j, homeArray[i][j]));
+        }
       }
     }
     return gameGrid;
   }
 
-  // square(Xcoord, Ycoord) {
-  //   return <div className="square" onClick={(e) => this.squareClicked(e)} key={[Xcoord, Ycoord]} data={[Xcoord,Ycoord]} > {Xcoord} {Ycoord} </div>
-  // }
-
-  // buildSquares(props) {
-  //   let gameGrid = [];
-
-  //   for (let i = 0; i < props; i++) {
-  //     for (let j = 0; j < props; j++) {
-  //       gameGrid.push(this.square(i, j));
-  //     }
-  //   }
-  //   return gameGrid;
-  // }
-
-  buildShip(x, y) {
-    window.addEventListener("load",function() {
-      let selected = document.querySelector(`.square[data="${x},${y}"]`);
-      selected.className = "ship";
-    });  
-    this.state.boardData.setShip(x, y)
-    // console.log(this.state.boardData.board)
-  }
-
-  buildShips() {
-    this.buildShip(0, 1) 
+  squareClicked(e) {
+    let x = e.target.attributes.data.value[0] * 1;
+    let y = e.target.attributes.data.value[2] * 1;
+    console.log(e.target)
+    console.log(this.state.boardData.board)
+    if (e.target.className === "ship") {
+      this.state.boardData.recievedAttack(x, y);
+      e.target.className = "hit";
+    } else if (e.target.className === "square") {
+      this.state.boardData.recievedAttack(x, y);
+      e.target.className = "miss";
+    }
   }
 
   render() {
     return <div className="board" >
+      {this.initShips()}
       {this.buildSquares(8)}
       {this.buildShips()}
      </div>

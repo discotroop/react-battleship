@@ -1,28 +1,51 @@
 import React from 'react';
 import './App.css';
-import GameBoard from './components/gameBoard';
+import GameLogic from './components/gameBoard';
 
+const theGame = GameLogic();
 // To Do:
 
 // generate ship layouts - mvp
   // make them "random"
 
 // set up gameplay loop between ai and human player
-
+  // should have done this earlier.... 
 
 function App() {
   return (
     <div className="App">
       <div className="boards">
         <div> Player 1 (you)
-          <Board player="human" />
+          <Board player="human" data={theGame.human} />
         </div>
         <div> Player 2 (ai)
-          <Board player="ai"/>
+          <Board player="ai" data={theGame.ai}/>
         </div>
+      </div>
+      <div> 
+        <Game />
       </div>
     </div>
   );
+}
+
+class Game extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      gameData: theGame,
+    }
+  }
+  someFunction() {
+
+  }
+  render () {
+    return <div> 
+      <Board player="human" data={this.state.gameData.human}/>
+      <Board player="ai" data={this.state.gameData.ai}/>
+
+    </div>
+  }
 }
 
 class Board extends React.Component {
@@ -30,7 +53,7 @@ class Board extends React.Component {
     super(props)
     this.state = {
       player: props.player,
-      boardData: GameBoard(),
+      boardData: props.data,
     }
   }
 
@@ -43,9 +66,9 @@ class Board extends React.Component {
       this.state.boardData.placeShip(4, 6, "down", 2)
     } else {
       this.state.boardData.placeShip(1, 1, "down", 5)
-      this.state.boardData.placeShip(7, 7, "up", 2)
-      this.state.boardData.placeShip(5, 2, "left", 3)
-      this.state.boardData.placeShip(4, 1, "up", 2)
+      this.state.boardData.placeShip(7, 7, "up", 4)
+      this.state.boardData.placeShip(1, 5, "left", 3)
+      this.state.boardData.placeShip(5, 3, "up", 2)
       this.state.boardData.placeShip(4, 6, "down", 2)
     }
   }

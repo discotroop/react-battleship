@@ -1,10 +1,11 @@
-import React from 'react';
-import Ship from './ship'
-import GameBoard from './gameBoard'
+import theGame from './gameBoard'
+
+let sampleGame = theGame();
+let sampleBoard = sampleGame.human;
 
 function Player() {
     return {
-        playersBoard: GameBoard(), 
+        playersBoard: sampleBoard, 
         isHuman: false,
         isTurn: false,
         randomNumber: function () {

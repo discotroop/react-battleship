@@ -1,7 +1,7 @@
-import React from 'react';
 import Ship from './ship'
 
-function GameBoard() {
+function GameBoard(player) {
+    const passedPlayer = player;
     const letters = new Array(8);
 
     function drawGrid () {
@@ -25,16 +25,10 @@ function GameBoard() {
         ]
     }    
 
-    // isSunk: function() {
-    //     if (this.hits.includes(undefined)) {
-    //         console.log("floating")
-    //     } else {
-    //         this.sunk = "Y";
-    //     }
-
     return {
         board: drawGrid(),
         fleet: buildFleet(),
+        player: passedPlayer,
         fleetStatus: "Y",
 
         // handy helpers
@@ -63,25 +57,21 @@ function GameBoard() {
         },
 
         placeShip: function (x, y, direction, length) {
-        // up
             if (direction === "left") {
                 let end = y - length;
                 for (let i = y; i > end; i--) {
                     this.setShip(x, i);
                 }
-        // down
             } else if (direction === "right") {
                 let end = y + length;
                 for (let i = y; i < end; i++) {
                     this.setShip(x, i);
                 }
-        // left
             } else if (direction === "up") {
                 let end = x - length;
                 for (let i = x; i > end; i--) {
                     this.setShip(i, y);
                 }
-        // right 
             } else if (direction === "down") {
                 let end = x + length;
                 for (let i = x; i < end; i++) {
@@ -105,4 +95,35 @@ function GameBoard() {
     };
 }
 
-export default GameBoard;
+function theGame() {
+    return {
+        human: GameBoard(),
+        ai: GameBoard(),
+        currentPlayer: "human",
+        random: function() {
+            return Math.round(Math.random * 10)
+        },
+        aiAttack: function () {
+            let number = this.random()
+            if (number < 9 && number > 0) {
+                return number;
+            } else {
+                number = this.aiAttack();
+            }
+        },
+        // round: function() {
+        //     let currentPlayer = "human";
+        //     console.log(this.random())
+        // },
+        humanPlay: function (x, y) {
+            this.ai.recievedAttack(x, y);
+            this.currentPlayer = "ai";
+            this.aiPlay();
+        },
+        aiPlay: function() {
+            this.human.recievedAttack(this.random(), this.random())
+        } 
+    }
+}
+
+export default theGame;

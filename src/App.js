@@ -36,18 +36,30 @@ class Game extends React.Component {
       gameData: theGame,
     }
   }
-  someFunction() {
-
+  humanPlayed() {
+    console.log("clicked on ai")
+    console.log(this.state.gameData)
+    this.state.gameData.aiPlay();
+    this.setState();
   }
   render () {
     return <div> 
       <div className = "human">
-        <Board player="human" data={this.state.gameData.human}/>
+        <Board 
+          player="human" 
+          data={this.state.gameData.human} 
+          currentPlayer={this.state.gameData.currentPlayer}
+        />
       </div>
-      <div className="ai">
-      <Board player="ai" data={this.state.gameData.ai}/>
-      </div> 
+      <div className="ai" onClick={() => this.humanPlayed()}> 
+      <div> <h1> {this.state.gameData.currentPlayer} </h1> </div>
 
+        <Board 
+          player="ai" 
+          data={this.state.gameData.ai}
+          currentPlayer={this.state.gameData.currentPlayer}
+        />
+      </div> 
     </div>
   }
 }
@@ -58,9 +70,11 @@ class Board extends React.Component {
     this.state = {
       player: props.player,
       boardData: props.data,
+      currentPlayer: props.currentPlayer,
     }
   }
 
+  // temporary non-random set up
   initShips() {
     if (this.state.player === "human") {
       this.state.boardData.placeShip(1, 1, "right", 5)
@@ -124,13 +138,16 @@ class Board extends React.Component {
   }
 
   squareClicked(e) {
+    let that = this;
     let x = e.target.attributes.data.value[0] * 1;
     let y = e.target.attributes.data.value[2] * 1;
+
+    // prevents firing onto own board.
     let boardClicked = e.target.parentNode.parentNode.className;
-    if (boardClicked === "human") {
-      return;
-    }
-    console.log(e.target.parentNode.parentNode)
+      if (boardClicked === "human") {
+        return;
+      }
+
     if (e.target.className === "ship") {
       this.state.boardData.recievedAttack(x, y);
       e.target.className = "hit";
@@ -140,6 +157,16 @@ class Board extends React.Component {
     } else if (e.target.className === "square") {
       this.state.boardData.recievedAttack(x, y);
       e.target.className = "miss";
+    } else if (e.target.className === "hit") {
+      return;
+    } else if (e.target.className === "miss") {
+      return;
+    }
+
+    if (boardClicked === "ai") {
+      that.state.currentPlayer = "ai";
+      that.setState({currentPlayer: "ai"});
+      console.log(that.state.currentPlayer)
     }
   }
 

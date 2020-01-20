@@ -101,7 +101,7 @@ function theGame() {
         ai: GameBoard(),
         currentPlayer: "human",
         random: function() {
-            return Math.round(Math.random * 10)
+            return Math.round(Math.random() * 10)
         },
         aiAttack: function () {
             let number = this.random()
@@ -117,7 +117,8 @@ function theGame() {
             this.aiPlay();
         },
         aiPlay: function() {
-            this.human.recievedAttack(this.random(), this.random())
+            this.human.recievedAttack(5, 5)
+            this.human.recievedAttack(this.aiAttack(), this.aiAttack())
             this.currentPlayer = "human";
         } 
     }

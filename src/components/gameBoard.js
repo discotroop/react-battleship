@@ -111,10 +111,6 @@ function theGame() {
                 number = this.aiAttack();
             }
         },
-        // round: function() {
-        //     let currentPlayer = "human";
-        //     console.log(this.random())
-        // },
         humanPlay: function (x, y) {
             this.ai.recievedAttack(x, y);
             this.currentPlayer = "ai";
@@ -122,6 +118,7 @@ function theGame() {
         },
         aiPlay: function() {
             this.human.recievedAttack(this.random(), this.random())
+            this.currentPlayer = "human";
         } 
     }
 }

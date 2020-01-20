@@ -41,8 +41,12 @@ class Game extends React.Component {
   }
   render () {
     return <div> 
-      <Board player="human" data={this.state.gameData.human}/>
+      <div className = "human">
+        <Board player="human" data={this.state.gameData.human}/>
+      </div>
+      <div className="ai">
       <Board player="ai" data={this.state.gameData.ai}/>
+      </div> 
 
     </div>
   }
@@ -122,6 +126,11 @@ class Board extends React.Component {
   squareClicked(e) {
     let x = e.target.attributes.data.value[0] * 1;
     let y = e.target.attributes.data.value[2] * 1;
+    let boardClicked = e.target.parentNode.parentNode.className;
+    if (boardClicked === "human") {
+      return;
+    }
+    console.log(e.target.parentNode.parentNode)
     if (e.target.className === "ship") {
       this.state.boardData.recievedAttack(x, y);
       e.target.className = "hit";

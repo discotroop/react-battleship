@@ -64,25 +64,25 @@ function GameBoard() {
 
         placeShip: function (x, y, direction, length) {
         // up
-            if (direction === "up") {
+            if (direction === "left") {
                 let end = y - length;
                 for (let i = y; i > end; i--) {
                     this.setShip(x, i);
                 }
         // down
-            } else if (direction === "down") {
+            } else if (direction === "right") {
                 let end = y + length;
                 for (let i = y; i < end; i++) {
                     this.setShip(x, i);
                 }
         // left
-            } else if (direction === "left") {
+            } else if (direction === "up") {
                 let end = x - length;
                 for (let i = x; i > end; i--) {
                     this.setShip(i, y);
                 }
         // right 
-            } else if (direction === "right") {
+            } else if (direction === "down") {
                 let end = x + length;
                 for (let i = x; i < end; i++) {
                     this.setShip(i, y);

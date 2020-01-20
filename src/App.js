@@ -4,7 +4,9 @@ import GameBoard from './components/gameBoard';
 
 // To Do:
 
-// generate random layouts for ships
+// generate ship layouts
+// block view of ai from user
+  // generate random layouts for ships
   // lay ships on field
   // start static
 // set up gameplay loop between ai and human player
@@ -17,10 +19,10 @@ function App() {
     <div className="App">
       <div className="boards">
         <div> Player 1 
-          <Board player="player1" />
+          <Board player="human" />
         </div>
         <div> Player 2 (ai)
-          <Board player="player2"/>
+          <Board player="ai"/>
         </div>
       </div>
     </div>
@@ -36,23 +38,35 @@ class Board extends React.Component {
     }
   }
 
-  buildShip(x, y) {
-    window.addEventListener("load",function() {
-      let selected = document.querySelector(`.square[data="${x},${y}"]`);
-      selected.className = "ship";
-    });  
-    this.state.boardData.setShip(x, y)
-  }
+  // buildShip(x, y) {
+  //   let that = this;
+  //   window.addEventListener("load",function() {
+  //     let selected = document.querySelector(`.square[data="${x},${y}"]`);
+  //     if (that.state.player === "ai") {
+  //       selected.className = "aiship"
+  //     } else {
+  //     selected.className = "ship";
+  //     }
+  //   });  
+  //   this.state.boardData.setShip(x, y)
+  // }
 
   initShips() {
-    this.state.boardData.placeShip(1, 1, "down", 5)
-    this.state.boardData.placeShip(7, 7, "left", 2)
-
+    if (this.state.player === "human") {
+      this.state.boardData.placeShip(1, 1, "right", 5) // right
+      this.state.boardData.placeShip(3, 1, "right", 4) // right
+      this.state.boardData.placeShip(6, 1, "left", 3) // left
+      this.state.boardData.placeShip(7, 7, "up", 2) // up
+      this.state.boardData.placeShip(4, 6, "down", 2) // down
+    } else {
+      this.state.boardData.placeShip(1, 1, "down", 5)
+      this.state.boardData.placeShip(7, 7, "up", 2)
+    }
   }
 
-  buildShips() {
-    this.buildShip(5, 5) 
-  }
+  // buildShips() {
+  //   this.buildShip(5, 5) 
+  // }
 
   square(Xcoord, Ycoord, someValue) {
     return <div className="square" value={someValue} onClick={(e) => 
@@ -72,16 +86,28 @@ class Board extends React.Component {
       </div>
   }
 
+  aiShipSquare(Xcoord, Ycoord, someValue) {
+    return <div className="aiship" value={someValue} onClick={(e) => 
+      this.squareClicked(e)} 
+      key={[Xcoord, Ycoord]} 
+      data={[Xcoord,Ycoord]}>
+         {Xcoord} {Ycoord} 
+      </div>
+  }
+
 
   buildSquares(props) {
     let gameGrid = []
     let homeArray = this.state.boardData.board;
     console.log(homeArray);
+    let that = this;
 
     for (let i = 0; i < homeArray.length; i++) {
       for (let j = 0; j < homeArray[i].length; j++) {
-        if (homeArray[i][j] === "s") {
+        if (homeArray[i][j] === "s" && that.state.player === "human") {
           gameGrid.push(this.shipSquare(i, j, homeArray[i][j]));
+        } else if (homeArray[i][j] === "s" && that.state.player === "ai") {
+          gameGrid.push(this.aiShipSquare(i, j, homeArray[i][j]))
         } else {
         gameGrid.push(this.square(i, j, homeArray[i][j]));
         }
@@ -108,7 +134,7 @@ class Board extends React.Component {
     return <div className="board" >
       {this.initShips()}
       {this.buildSquares(8)}
-      {this.buildShips()}
+      {/* {this.buildShips()} */}
      </div>
   }
 }

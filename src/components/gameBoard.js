@@ -46,6 +46,8 @@ function GameBoard(player) {
         },
 
         recievedAttack: function (x, y) {
+            console.log(x, y);
+            console.log(this.board[x][y]);
             let target = this.board[x][y];
             if (target === "s") {
                 target = this.setHit(x, y);
@@ -106,13 +108,14 @@ function theGame() {
         aiAttack: function () {
             let number = this.random()
             if (number < 9 && number > 0) {
+                console.log(number);
                 return number;
             } else {
                 number = this.aiAttack();
             }
         },
         humanPlay: function (x, y) {
-            this.ai.recievedAttack(x, y);
+            // this.ai.recievedAttack(x, y);
             this.currentPlayer = "ai";
             this.aiPlay();
         },

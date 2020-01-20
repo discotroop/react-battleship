@@ -36,11 +36,16 @@ class Game extends React.Component {
       gameData: theGame,
     }
   }
+  checkAiPlay() {
+    let targetDiv = document.querySelector(".square")
+    console.log(targetDiv);
+  }
+
   humanPlayed() {
     console.log("clicked on ai")
     console.log(this.state.gameData)
     this.state.gameData.aiPlay();
-    this.setState();
+    this.checkAiPlay();
   }
   render () {
     return <div> 

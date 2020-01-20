@@ -11,6 +11,10 @@ const theGame = GameLogic();
 // set up gameplay loop between ai and human player
   // should have done this earlier.... 
 
+// recieved attack is out of wack... go back to drawing board and
+// finish making the game work in a testable enviromnet.. then bring
+// it up the world.
+
 function App() {
   return (
     <div className="App">
@@ -38,13 +42,11 @@ class Game extends React.Component {
   }
   checkAiPlay() {
     let targetDiv = document.querySelector(".square")
-    console.log(targetDiv);
   }
 
   humanPlayed() {
-    console.log("clicked on ai")
-    console.log(this.state.gameData)
-    this.state.gameData.aiPlay();
+ 
+    this.state.gameData.aiPlay(this.state.gameData.aiAttack(), this.state.gameData.aiAttack());
     this.checkAiPlay();
   }
   render () {
@@ -171,7 +173,6 @@ class Board extends React.Component {
     if (boardClicked === "ai") {
       that.state.currentPlayer = "ai";
       that.setState({currentPlayer: "ai"});
-      console.log(that.state.currentPlayer)
     }
   }
 

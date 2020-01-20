@@ -71,3 +71,13 @@ test("fleet status is 'N' when all ships sunk", () => {
     sampleBoard.hasFleet();
     expect(sampleBoard.fleetStatus).toBe("N");
 })
+
+let newGame = theGame();
+let sampleHuman = newGame.human;
+let sampleAI = newGame.ai;
+
+// Game round testing
+test("AIplay @ 5, 5 shoots at 5, 5", () => {
+    newGame.aiPlay(5, 5);
+    expect(sampleHuman.board[5][5]).toBe("m");
+});

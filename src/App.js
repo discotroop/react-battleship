@@ -5,6 +5,10 @@ import GameLogic from './components/gameBoard';
 const theGame = GameLogic();
 // To Do:
 
+// go back finish game logic
+// may have to scrap whole front end
+// write tests
+
 // generate ship layouts - mvp
   // make them "random"
 

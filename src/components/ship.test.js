@@ -12,7 +12,7 @@ test('tracks ships length', () => {
 
 test('tracks ship hits', () => {
     carrier.hit(1);
-    expect(carrier.hits[1]).toBe("x");
+    expect(carrier.health[1]).toBe("x");
   });
 
 test('tracks when ship sunk', () => {

@@ -12,17 +12,18 @@ let checklist = {
     // 4: "isSunk() checks if based on length the ship has sunk",
 
     // Gameboard factory
-    one: "use tests alone, no DOM or console logs",
-    two: "gameboards should place ships at coords by calling ship factory",
-    three: "recievedAttack() should take coords, check if ship is hit, " + 
+    // one: "use tests alone, no DOM or console logs",
+    two: "gameboards should place ships at coords by calling ship factory" +
+        "sorta work but needs more details",
+    // three: "recievedAttack() should take coords, check if ship is hit, " + 
     
     // PROBLEM!
-    "SEND THE ATTACK TO THE APPROPRIATESHIP" + 
+    // "SEND THE ATTACK TO THE APPROPRIATESHIP" + 
     // PROBLEM!
 
-    "or record misses",
-    four: "should track missed attacks",
-    five: "gameboards should know if all ships have sunk",
+    // "or record misses",
+    // four: "should track missed attacks",
+    // five: "gameboards should know if all ships have sunk",
 
     // create player:
     i: "players should take turns by attack the others board",
@@ -50,31 +51,30 @@ let sampleGame = theGame();
 let sampleBoard = sampleGame.human;
 let sampleShip = Ship(2);
 
-
-
-
 // Grid Board Set Up
-test("it returns and object with a nested array representing the board", () => {
+test("It returns an object with a board property this is an array of length 8" +
+        "representing the x-axis",
+        () => {
     expect(sampleBoard.board.length).toBe(8);
 });
 
-test("confirming above", () => {
+test("Nested within the X-axis array are 8 array of length 8 representing the Y-Axis", () => {
     expect(sampleBoard.board[0].length).toBe(8);
 });
 
 
 /* Basic Ship Placement */
-test("ships can be placed in grid going down", () => {
+test("Ships can be placed in grid going down", () => {
     sampleBoard.placeShip(0, 0, "down", sampleShip)
     expect(sampleBoard.board[0][0]).toBe("s");
     expect(sampleBoard.board[1][0]).toBe("s");
 });
-test("ships can be placed in grid going up", () => {
+test("Ships can be placed in grid going up", () => {
     sampleBoard.placeShip(3, 3, "up", sampleShip)
     expect(sampleBoard.board[3][3]).toBe("s");
     expect(sampleBoard.board[2][3]).toBe("s");
 });
-test("ships can be placed in grid going left", () => {
+test("Ships can be placed in grid going left", () => {
     sampleBoard.placeShip(3, 3, "left", sampleShip)
     expect(sampleBoard.board[3][3]).toBe("s");
     expect(sampleBoard.board[2][3]).toBe("s");
@@ -89,14 +89,14 @@ test.todo("ship placement must be within grid");
 test.todo("ship placement cannot overlap with other ships");
 
 /* Mapping grid location to ships object */
-test("ships know where they are on the grid", () => {
+test("Ships know where they are on the grid", () => {
     let sampleGame = theGame();
     let sampleBoard = sampleGame.human;
     let sampleShip = Ship(3);
     sampleBoard.placeShip(3, 3, "right", sampleShip)
     expect(sampleShip.health[0]).toBe("3,3");
 });
-test("ships know where they are on the grid", () => {
+test("Ships know where they are on the grid", () => {
     let sampleGame = theGame();
     let sampleBoard = sampleGame.human;
     let sampleShip = Ship(3);
@@ -109,40 +109,51 @@ test("ships know where they are on the grid", () => {
 
 
 // Tracking Hits and Misses
-test("it tracks hits on the board", () => {
+test("It tracks hits on the board", () => {
     sampleBoard.test(0, 1, "s")
     sampleBoard.recievedAttack(0, 1);
     expect(sampleBoard.board[0][1]).toBe("sh");
 });
-test("it tracks misses on the board", () => {
+test("It tracks misses on the board", () => {
     sampleBoard.recievedAttack(2, 2);
     expect(sampleBoard.board[2][2]).toBe("m");
 });
 
 /* Tracking hits on Board to ship objects health */
-test("it matches hit counts on the board to ships position", () => {
+test("It matches hit counts on the board to ships position", () => {
     let sampleGame = theGame();
     let sampleBoard = sampleGame.human;
     let sampleShip = sampleBoard.fleet[4];
-    sampleBoard.placeShip(3, 3, "left", sampleShip)
     
+    sampleBoard.placeShip(3, 3, "left", sampleShip)
     sampleBoard.recievedAttack(3, 3);
-    console.log(sampleShip);
-
+    
     expect(sampleShip.health[0]).toBe("x");
 });
-test("it matches hit counts on the board to ships position, and ships sink", () => {
+test("It matches hit counts on the board to ships position, and ships sink", () => {
     let sampleGame = theGame();
     let sampleBoard = sampleGame.human;
     let sampleShip = sampleBoard.fleet[4];
-    sampleBoard.placeShip(3, 3, "left", sampleShip)
     
+    sampleBoard.placeShip(3, 3, "left", sampleShip)
     sampleBoard.recievedAttack(3, 3);
     sampleBoard.recievedAttack(3, 2);
-    console.log(sampleShip);
 
     expect(sampleShip.sunk).toBe("Y");
 });
+
+// Tracking Fleet Status
+test("Fleet status is 'Y' while a ship is afloat", () => {
+    sampleBoard.fleet = [sampleShip]
+    expect(sampleBoard.fleetStatus).toBe("Y");
+});
+
+test("Fleet status is 'N' when all ships sunk", () => {
+    sampleBoard.fleet = [sampleShip];
+    sampleBoard.fleet[0].sunk = "Y";
+    sampleBoard.hasFleet();
+    expect(sampleBoard.fleetStatus).toBe("N");
+})
 
 
 
@@ -157,16 +168,20 @@ test("it matches hit counts on the board to ships position, and ships sink", () 
 test("it tracks hit counts on the board", () => {
     let sampleGame = theGame();
     let sampleBoard = sampleGame.human;
+
     sampleBoard.placeShip(0, 1, "down", sampleShip)
     sampleBoard.recievedAttack(0, 1);
+
     expect(sampleBoard.hits).toBe(1);
 });
 test("it tracks multiple hit counts on the board", () => {
     let sampleGame = theGame();
     let sampleBoard = sampleGame.human;
+
     sampleBoard.placeShip(0, 1, "down", sampleShip)
     sampleBoard.recievedAttack(0, 1);
     sampleBoard.recievedAttack(1, 1);
+
     expect(sampleBoard.hits).toBe(2);
 });
 test("it checks hit counts against ships total", () => {
@@ -182,24 +197,16 @@ test("it checks hit counts against ships total", () => {
 })
 
 
-// Tracking Fleet Status
-test("fleet status is 'Y' while a ship is afloat", () => {
-    sampleBoard.fleet = [sampleShip]
-    expect(sampleBoard.fleetStatus).toBe("Y");
-});
-
-test("fleet status is 'N' when all ships sunk", () => {
-    sampleBoard.fleet = [sampleShip];
-    sampleBoard.fleet[0].sunk = "Y";
-    sampleBoard.hasFleet();
-    expect(sampleBoard.fleetStatus).toBe("N");
-})
-
 let newGame = theGame();
 let sampleHuman = newGame.human;
 let sampleAI = newGame.ai;
 
-// Game round testing
+// Shots fired.
+
+test("Human play hits sampleAI.board", () => {
+    newGame.humanPlay(4,4);
+    expect(sampleAI.board[4][4]).toBe("m");
+})
 test("AIplay @ 5, 5 shoots at 5, 5", () => {
     newGame.aiPlay(5, 5);
     expect(sampleHuman.board[5][5]).toBe("m");

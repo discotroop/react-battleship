@@ -50,6 +50,7 @@ function GameBoard(player) {
             }
         },
         setHitToShip: function (x, y) {
+            // use arr.includes() on refactor
             let target = `${x},${y}`;
 
             for (let i=0; i<this.fleet.length; i++) {
@@ -147,8 +148,7 @@ function theGame() {
             }
         },
         humanPlay: function (x, y) {
-            this.currentPlayer = "ai";
-            this.aiPlay();
+            this.ai.recievedAttack(x, y);
         },
         aiPlay: function(x, y) {
             this.human.recievedAttack(x, y)

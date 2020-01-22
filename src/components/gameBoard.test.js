@@ -123,17 +123,26 @@ test("it tracks misses on the board", () => {
 test("it matches hit counts on the board to ships position", () => {
     let sampleGame = theGame();
     let sampleBoard = sampleGame.human;
-    let sampleShip = sampleBoard.fleet.destroyer
+    let sampleShip = sampleBoard.fleet[4];
     sampleBoard.placeShip(3, 3, "left", sampleShip)
-    console.log(sampleShip);
-
-   
-    sampleBoard.recievedAttack(0, 1);
+    
+    sampleBoard.recievedAttack(3, 3);
     console.log(sampleShip);
 
     expect(sampleShip.health[0]).toBe("x");
-})
+});
+test("it matches hit counts on the board to ships position, and ships sink", () => {
+    let sampleGame = theGame();
+    let sampleBoard = sampleGame.human;
+    let sampleShip = sampleBoard.fleet[4];
+    sampleBoard.placeShip(3, 3, "left", sampleShip)
+    
+    sampleBoard.recievedAttack(3, 3);
+    sampleBoard.recievedAttack(3, 2);
+    console.log(sampleShip);
 
+    expect(sampleShip.sunk).toBe("Y");
+});
 
 
 

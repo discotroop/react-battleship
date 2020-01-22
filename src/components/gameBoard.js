@@ -16,15 +16,13 @@ function GameBoard(player) {
     }
 
     function buildFleet () {
-        return {
-            carrier: Ship(5),
-            battleship: Ship(4),
-            cruiser: Ship(3),
-            submarine: Ship(3),
-            destroyer: Ship(2)
-        }
-            
-        
+        return [
+            Ship(5),
+            Ship(4),
+            Ship(3),
+            Ship(3),
+            Ship(2),
+        ]      
     } 
     
     return {
@@ -43,17 +41,17 @@ function GameBoard(player) {
             return this.board[x][y] = "sh";
         },
         checkShip: function (coords, ship) {
-            console.log(coords);
-            console.log(ship);
+            let health = ship.health;
 
-            for (let i=0; i<ship.length; i++) {
-                if (ship[i] === coords) {
+            for (let i=0; i<health.length; i++) {
+                if (health[i] === coords) {
+                    ship.hit(i);
                 }
             }
         },
         setHitToShip: function (x, y) {
-            console.log("running")
             let target = `${x},${y}`;
+
             for (let i=0; i<this.fleet.length; i++) {
                 this.checkShip(target, this.fleet[i]);
             }

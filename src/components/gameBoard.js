@@ -16,13 +16,15 @@ function GameBoard(player) {
     }
 
     function buildFleet () {
-        return [
-            Ship(5),
-            Ship(4),
-            Ship(3),
-            Ship(3),
-            Ship(2)
-        ]
+        return {
+            carrier: Ship(5),
+            battleship: Ship(4),
+            cruiser: Ship(3),
+            submarine: Ship(3),
+            destroyer: Ship(2)
+        }
+            
+        
     } 
     
     return {

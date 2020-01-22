@@ -42,6 +42,22 @@ function GameBoard(player) {
         setHit: function (x, y) {
             return this.board[x][y] = "sh";
         },
+        checkShip: function (coords, ship) {
+            console.log(coords);
+            console.log(ship);
+
+            for (let i=0; i<ship.length; i++) {
+                if (ship[i] === coords) {
+                }
+            }
+        },
+        setHitToShip: function (x, y) {
+            console.log("running")
+            let target = `${x},${y}`;
+            for (let i=0; i<this.fleet.length; i++) {
+                this.checkShip(target, this.fleet[i]);
+            }
+        },
         setMiss: function (x, y) {
             return this.board[x][y] = "m"; 
         },
@@ -63,6 +79,7 @@ function GameBoard(player) {
                 this.hits += 1;
                 target = "sh";
                 this.setHit(x, y);
+                this.setHitToShip(x, y);
             } else if (typeof target === "number") {
                 target = this.setMiss(x, y);
             }
@@ -81,16 +98,21 @@ function GameBoard(player) {
                 let end = y + ship.length;
                 for (let i = y; i < end; i++) {
                     this.setShip(x, i);
+                    ship.health.push(`${x},${i}`)
                 }
             } else if (direction === "up") {
                 let end = x - ship.length;
                 for (let i = x; i > end; i--) {
                     this.setShip(i, y);
+                    ship.health.push(`${i},${y}`)
+
                 }
             } else if (direction === "down") {
                 let end = x + ship.length;
                 for (let i = x; i < end; i++) {
                     this.setShip(i, y);
+                    ship.health.push(`${i},${y}`)
+
                 }
             }
             return;

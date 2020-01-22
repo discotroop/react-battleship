@@ -90,6 +90,9 @@ test.todo("ship placement cannot overlap with other ships");
 
 /* Mapping grid location to ships object */
 test("ships know where they are on the grid", () => {
+    let sampleGame = theGame();
+    let sampleBoard = sampleGame.human;
+    let sampleShip = Ship(3);
     sampleBoard.placeShip(3, 3, "right", sampleShip)
     expect(sampleShip.health[0]).toBe("3,3");
 });
@@ -97,6 +100,7 @@ test("ships know where they are on the grid", () => {
     let sampleGame = theGame();
     let sampleBoard = sampleGame.human;
     let sampleShip = Ship(3);
+
     sampleBoard.placeShip(3, 3, "left", sampleShip)
     expect(sampleShip.health[0]).toBe("3,3");
     expect(sampleShip.health[1]).toBe("3,2");
@@ -114,6 +118,33 @@ test("it tracks misses on the board", () => {
     sampleBoard.recievedAttack(2, 2);
     expect(sampleBoard.board[2][2]).toBe("m");
 });
+
+/* Tracking hits on Board to ship objects health */
+test("it matches hit counts on the board to ships position", () => {
+    let sampleGame = theGame();
+    let sampleBoard = sampleGame.human;
+    let sampleShip = sampleBoard.fleet.destroyer
+    sampleBoard.placeShip(3, 3, "left", sampleShip)
+    console.log(sampleShip);
+
+   
+    sampleBoard.recievedAttack(0, 1);
+    console.log(sampleShip);
+
+    expect(sampleShip.health[0]).toBe("x");
+})
+
+
+
+
+
+
+
+
+
+
+
+/* tracking hit counts, might be absolete if ships works out */
 test("it tracks hit counts on the board", () => {
     let sampleGame = theGame();
     let sampleBoard = sampleGame.human;
@@ -129,17 +160,6 @@ test("it tracks multiple hit counts on the board", () => {
     sampleBoard.recievedAttack(1, 1);
     expect(sampleBoard.hits).toBe(2);
 });
-
-/* Tracking hits on Board to ship objects health */
-test("it matches hit counts on the board to ships position", () => {
-    let sampleGame = theGame();
-    let sampleBoard = sampleGame.human;
-    sampleBoard.placeShip(0, 1, "down", sampleShip)
-    sampleBoard.recievedAttack(0, 1);
-    sampleBoard.recievedAttack(1, 1);
-    expect(sampleBoard.hits).toBe(2);
-})
-
 test("it checks hit counts against ships total", () => {
     let sampleGame = theGame();
     let sampleBoard = sampleGame.human;
@@ -148,9 +168,6 @@ test("it checks hit counts against ships total", () => {
     sampleBoard.placeShip(0, 1, "down", sampleShip)
     sampleBoard.recievedAttack(0, 1);
     sampleBoard.recievedAttack(1, 1);
-    console.log(sampleBoard.hits);
-    console.log(sampleBoard.health)
-    
 
     expect(sampleBoard.fleetStatus).toBe("N");
 })

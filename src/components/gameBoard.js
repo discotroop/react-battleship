@@ -46,6 +46,12 @@ function GameBoard(player) {
         test(x, y, letters) {
             return this.board[x][y] = letters;
         },
+        checkhealth() {
+            if (this.hits === this.health) {
+                this.fleetStatus = "N";
+            }
+            return;
+        },
 
         attackcount: 0,
 
@@ -54,14 +60,11 @@ function GameBoard(player) {
             if (target === "s") {
                 this.hits += 1;
                 target = "sh";
-                return this.setHit(x, y);
+                this.setHit(x, y);
             } else if (typeof target === "number") {
-                return target = this.setMiss(x, y);
+                target = this.setMiss(x, y);
             }
-            if (this.hits === this.health) {
-                this.fleetStatus = "N";
-            }
-            console.log(this.fleetStatus)
+            this.checkhealth();
             return;
         },
 

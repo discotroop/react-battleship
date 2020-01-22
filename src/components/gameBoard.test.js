@@ -5,6 +5,10 @@ let sampleGame = theGame();
 let sampleBoard = sampleGame.human;
 let sampleShip = Ship(2);
 
+
+
+
+
 // Grid Board Set Up
 test("it returns and object with a nested array representing the board", () => {
     expect(sampleBoard.board.length).toBe(8);
@@ -13,6 +17,10 @@ test("it returns and object with a nested array representing the board", () => {
 test("confirming above", () => {
     expect(sampleBoard.board[0].length).toBe(8);
 });
+
+
+
+
 
 
 
@@ -43,6 +51,12 @@ test("ships can be placed in grid going right", () => {
 
 test.todo("ship placement must be within grid")
 test.todo("ship placement cannot overlap with other ships")
+
+
+
+
+
+
 
 
 
@@ -83,6 +97,9 @@ test("it checks hit counts against ships total", () => {
     sampleBoard.placeShip(0, 1, "down", 2)
     sampleBoard.recievedAttack(0, 1);
     sampleBoard.recievedAttack(1, 1);
+    console.log(sampleBoard.hits);
+    console.log(sampleBoard.health)
+    
 
     expect(sampleBoard.fleetStatus).toBe("N");
 })

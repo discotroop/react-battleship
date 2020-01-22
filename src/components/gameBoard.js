@@ -23,8 +23,8 @@ function GameBoard(player) {
             Ship(3),
             Ship(2)
         ]
-    }    
-
+    } 
+    
     return {
         board: drawGrid(),
         fleet: buildFleet(),
@@ -68,24 +68,24 @@ function GameBoard(player) {
             return;
         },
 
-        placeShip: function (x, y, direction, length) {
+        placeShip: function (x, y, direction, ship) {
             if (direction === "left") {
-                let end = y - length;
+                let end = y - ship.length;
                 for (let i = y; i > end; i--) {
                     this.setShip(x, i);
                 }
             } else if (direction === "right") {
-                let end = y + length;
+                let end = y + ship.length;
                 for (let i = y; i < end; i++) {
                     this.setShip(x, i);
                 }
             } else if (direction === "up") {
-                let end = x - length;
+                let end = x - ship.length;
                 for (let i = x; i > end; i--) {
                     this.setShip(i, y);
                 }
             } else if (direction === "down") {
-                let end = x + length;
+                let end = x + ship.length;
                 for (let i = x; i < end; i++) {
                     this.setShip(i, y);
                 }

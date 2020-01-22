@@ -3,7 +3,7 @@ import React from 'react';
 function Ship(length) {
     return {
         length: length,
-        health: new Array(length),
+        health: [],
         sunk: "N",
         hit: function(position) {
             this.health[position] = "x";

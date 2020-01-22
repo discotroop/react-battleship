@@ -75,6 +75,7 @@ function GameBoard(player) {
                 let end = y - ship.length;
                 for (let i = y; i > end; i--) {
                     this.setShip(x, i);
+                    ship.health.push(`${x},${i}`)
                 }
             } else if (direction === "right") {
                 let end = y + ship.length;

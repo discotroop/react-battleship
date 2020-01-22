@@ -1,10 +1,54 @@
 import theGame from './gameBoard'
 import Ship from './ship'
 
+
+
+let checklist = {
+    // ship factory
+    1: "ship includes length, hits and if sunk",
+    2: "only test public interface" ,
+    3: "ships have a hit() function that takes a number" +
+        "and marks it as a hit",
+    4: "isSunk() checks if based on length the ship has sunk",
+
+    // Gameboard factory
+    one: "use tests alone, no DOM or console logs",
+    two: "gameboards should place ships at coords by calling ship factory",
+    three: "recievedAttack() should take coords, check if ship is hit, " + 
+    
+    // PROBLEM!
+    "SEND THE ATTACK TO THE APPROPRIATESHIP" + 
+    // PROBLEM!
+
+    "or record misses",
+    four: "should track missed attacks",
+    five: "gameboards should know if all ships have sunk",
+
+    // create player:
+    i: "players should take turns by attack the others board",
+    ii: "make an ai player to take random shots, should only take legal moves",
+
+    // create game loop and DOM module
+    a: "at THIS point you can build UI",
+    b: "the game loop should set up a new game, creating players and boards" +
+    " start with predetermined layouts" + "you can allow custom placement later",
+    c: "players boards should be rendered based on Gameboard class",
+        c1: "need methods to render boards and take user input for attacks",
+    d: "the game loop should go turn by turn using ONLY methods from other objects" +
+    "if at any point you are tempted to write a new function inside the game loop, step" +
+    "back and figure out which class or module that function should belong to" ,
+    e: "create conditions so game ends when one players ships have been sunk" +
+    "this function is appropriate for the game module",
+
+    // finishing up
+    x: "you can let users place ships",
+    y: "you can polish the ai",
+    z: "you can make a two player option",
+}
+
 let sampleGame = theGame();
 let sampleBoard = sampleGame.human;
 let sampleShip = Ship(2);
-
 
 
 

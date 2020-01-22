@@ -12,7 +12,7 @@ function Ship(length) {
         },
         isSunk: function() {
             if (this.hits.includes(undefined)) {
-                console.log("floating")
+                // console.log("floating")
             } else {
                 this.sunk = "Y";
             }

@@ -28,8 +28,10 @@ function GameBoard(player) {
     return {
         board: drawGrid(),
         fleet: buildFleet(),
+        health: 17,
         player: passedPlayer,
         fleetStatus: "Y",
+        hits: 0,
 
         // handy helpers
         setShip: function (x, y) {
@@ -45,18 +47,22 @@ function GameBoard(player) {
             return this.board[x][y] = letters;
         },
 
+        attackcount: 0,
+
         recievedAttack: function (x, y) {
-            console.log(x);
-            console.log(y);
-            console.log(this.board);
             let target = this.board[x][y];
             if (target === "s") {
-                target = this.setHit(x, y);
-                this.hasFleet();
-            } else {
-               target = this.setMiss(x, y);
+                this.hits += 1;
+                target = "sh";
+                return this.setHit(x, y);
+            } else if (typeof target === "number") {
+                return target = this.setMiss(x, y);
             }
-            return
+            if (this.hits === this.health) {
+                this.fleetStatus = "N";
+            }
+            console.log(this.fleetStatus)
+            return;
         },
 
         placeShip: function (x, y, direction, length) {

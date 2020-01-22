@@ -58,6 +58,35 @@ test("it tracks misses on the board", () => {
     expect(sampleBoard.board[2][2]).toBe("m");
 });
 
+test("it tracks hit counts", () => {
+    let sampleGame = theGame();
+    let sampleBoard = sampleGame.human;
+    sampleBoard.placeShip(0, 1, "down", 1)
+    sampleBoard.recievedAttack(0, 1);
+    expect(sampleBoard.hits).toBe(1);
+});
+
+test("it tracks hit counts 2", () => {
+    let sampleGame = theGame();
+    let sampleBoard = sampleGame.human;
+    sampleBoard.placeShip(0, 1, "down", 2)
+    sampleBoard.recievedAttack(0, 1);
+    sampleBoard.recievedAttack(1, 1);
+    expect(sampleBoard.hits).toBe(2);
+});
+
+test("it checks hit counts against ships total", () => {
+    let sampleGame = theGame();
+    let sampleBoard = sampleGame.human;
+
+    sampleBoard.health = 2;
+    sampleBoard.placeShip(0, 1, "down", 2)
+    sampleBoard.recievedAttack(0, 1);
+    sampleBoard.recievedAttack(1, 1);
+
+    expect(sampleBoard.fleetStatus).toBe("N");
+})
+
 
 // Tracking Fleet Status
 test("fleet status is 'Y' while a ship is afloat", () => {
@@ -81,3 +110,7 @@ test("AIplay @ 5, 5 shoots at 5, 5", () => {
     newGame.aiPlay(5, 5);
     expect(sampleHuman.board[5][5]).toBe("m");
 });
+
+test("AIplay knows if it has sunk all human ships", () => {
+    sampleHuman.fleet = [sampleShip];
+})

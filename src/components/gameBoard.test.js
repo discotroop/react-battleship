@@ -197,21 +197,35 @@ test("it checks hit counts against ships total", () => {
 })
 
 
-let newGame = theGame();
-let sampleHuman = newGame.human;
-let sampleAI = newGame.ai;
-
 // Shots fired.
 
 test("Human play hits sampleAI.board", () => {
+    let newGame = theGame();
+    let sampleAI = newGame.ai;
+
     newGame.humanPlay(4,4);
     expect(sampleAI.board[4][4]).toBe("m");
 })
 test("AIplay @ 5, 5 shoots at 5, 5", () => {
+    let newGame = theGame();
+    let sampleHuman = newGame.human;
+
+    newGame.aiPlay(5, 5);
+    expect(sampleHuman.board[5][5]).toBe("m");
+});
+test("AIplay does not shoot the same spot twice", () => {
+    let newGame = theGame();
+    let sampleHuman = newGame.human;
+
+    newGame.aiPlay(5, 5);
     newGame.aiPlay(5, 5);
     expect(sampleHuman.board[5][5]).toBe("m");
 });
 
+
 test("AIplay knows if it has sunk all human ships", () => {
+    let newGame = theGame();
+    let sampleHuman = newGame.human;
+    
     sampleHuman.fleet = [sampleShip];
 })

@@ -141,17 +141,37 @@ function theGame() {
         },
         aiAttack: function () {
             let number = this.random()
-            if (number < 9 && number > 0) {
-                return number;
+            let result = 0;
+            if (number < 8 && number > -1) {
+                result = number;
             } else {
-                number = this.aiAttack();
+                result = this.aiAttack();
             }
+            return result;
         },
         humanPlay: function (x, y) {
             this.ai.recievedAttack(x, y);
+
+            let ex = this.aiAttack();
+            let why = this.aiAttack();
+            this.aiPlay(ex, why)
         },
         aiPlay: function(x, y) {
+            console.log("x", x);
+            console.log("y", y);
+            console.log(this);
+            console.log(this.human);
+            console.log(this.human.board);
+            console.log(this.human.board[x]);
+            console.log(this.human.board[x][y]);
+            let target = this.human.board[x][y]; 
+            if (target === "sh") {
+                this.aiPlay(this.aiAttack(), this.aiAttack())
+            } else if (target === "m") {
+                this.aiPlay(this.aiAttack(), this.aiAttack())
+            } else {
             this.human.recievedAttack(x, y)
+            }
             this.currentPlayer = "human";
         } 
     }

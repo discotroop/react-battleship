@@ -197,7 +197,7 @@ test("it checks hit counts against ships total", () => {
 })
 
 
-// Shots fired.
+// Testing firing mechanisms and game rounds.
 
 test("Human play hits sampleAI.board", () => {
     let newGame = theGame();
@@ -221,11 +221,25 @@ test("AIplay does not shoot the same spot twice", () => {
     newGame.aiPlay(5, 5);
     expect(sampleHuman.board[5][5]).toBe("m");
 });
-
-
 test("AIplay knows if it has sunk all human ships", () => {
     let newGame = theGame();
     let sampleHuman = newGame.human;
-    
+    let sampleShip = Ship(2);
     sampleHuman.fleet = [sampleShip];
+    sampleHuman.placeShip(0, 1, "down", sampleHuman.fleet[0]);
+    newGame.aiPlay(0, 1);
+    newGame.aiPlay(1, 1);
+
+    expect(sampleHuman.fleetStatus).toBe("N");
+})
+test("Human knows if it has sunk all AI ships", () => {
+    let newGame = theGame();
+    let sampleAI = newGame.ai;
+    let sampleShip = Ship(2);
+    sampleAI.fleet = [sampleShip];
+    sampleAI.placeShip(0, 1, "down", sampleAI.fleet[0]);
+    newGame.humanPlay(0, 1);
+    newGame.humanPlay(1, 1);
+
+    expect(sampleAI.fleetStatus).toBe("N");
 })

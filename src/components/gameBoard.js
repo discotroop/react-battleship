@@ -48,6 +48,7 @@ function GameBoard(player) {
                     ship.hit(i);
                 }
             }
+            this.hasFleet();
         },
         setHitToShip: function (x, y) {
             // use arr.includes() on refactor
@@ -157,13 +158,7 @@ function theGame() {
             this.aiPlay(ex, why)
         },
         aiPlay: function(x, y) {
-            console.log("x", x);
-            console.log("y", y);
-            console.log(this);
-            console.log(this.human);
-            console.log(this.human.board);
-            console.log(this.human.board[x]);
-            console.log(this.human.board[x][y]);
+    
             let target = this.human.board[x][y]; 
             if (target === "sh") {
                 this.aiPlay(this.aiAttack(), this.aiAttack())

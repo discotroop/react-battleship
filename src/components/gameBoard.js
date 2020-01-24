@@ -28,7 +28,6 @@ function GameBoard(player) {
     return {
         board: drawGrid(),
         fleet: buildFleet(),
-        health: 17,
         player: passedPlayer,
         fleetStatus: "Y",
         hits: 0,
@@ -64,15 +63,6 @@ function GameBoard(player) {
         test(x, y, letters) {
             return this.board[x][y] = letters;
         },
-        checkhealth() {
-            if (this.hits === this.health) {
-                this.fleetStatus = "N";
-            }
-            return;
-        },
-
-        attackcount: 0,
-
         recievedAttack: function (x, y) {
             let target = this.board[x][y];
             if (target === "s") {
@@ -82,7 +72,6 @@ function GameBoard(player) {
             } else if (typeof target === "number") {
                 target = this.setMiss(x, y);
             }
-            this.checkhealth();
             return;
         },
 
@@ -121,6 +110,7 @@ function GameBoard(player) {
             let status = []
             for (let i = 0; i < this.fleet.length; i++) {
                 status.push(this.fleet[i].sunk);
+                console.log(status);
             }
             if (status.includes("N")) {
                 this.fleetStatus = "Y"

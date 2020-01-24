@@ -13,6 +13,10 @@ const theGame = GameLogic();
 // I think I need to go back and change how the board is mapped out.
 // squares need to be a class or at least take props and send info back up to state.
 
+// game is setting "you win" before all the hits are in ... need to fix that. 
+// specifically the ai wins if it's "hit" any ships, not actually sunk
+// might have to fix it in ship.
+
 function App() {
   return (
     <div className="App">
@@ -37,8 +41,19 @@ class Game extends React.Component {
     super(props)
     this.state = {
       gameData: theGame,
+      endGame: "no way hosea",
     }
   }
+  checkEndGame() {
+    if (this.state.gameData.human.fleetStatus === "N") {
+      this.setState({endGame: "AI Wins!"});
+    } 
+    if (this.state.gameData.ai.fleetStatus === "N") {
+      this.setState({endGame: "You Win!"});
+    } 
+
+  }
+
   checkAiPlay() {
     let boardArr = this.state.gameData.human.board;
     let targetDivs = document.querySelectorAll(".human .board .square")   
@@ -53,6 +68,7 @@ class Game extends React.Component {
       } else if (location === "h") {
         targetDivs[i].classList.add("hit")
       }
+    this.checkEndGame();
   }
 }
 
@@ -71,7 +87,7 @@ class Game extends React.Component {
         />
       </div>
       <div className="ai" onClick={() => this.humanPlayed()}> 
-      <div> <h1> {this.state.gameData.currentPlayer} </h1> </div>
+      <div> <h1> {this.state.endGame} </h1> </div>
 
         <Board 
           player="ai" 

@@ -7,6 +7,7 @@ function Ship(length) {
         sunk: "N",
         hit: function(position) {
             this.health[position] = "x";
+            console.log("health", this.health);
             this.isSunk();
             return
         },

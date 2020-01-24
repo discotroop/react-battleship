@@ -8,9 +8,6 @@ function Ship(length) {
         hit: function(position) {
             this.health[position] = "x";
             this.isSunk();
-            if (this.health.length > length) {
-                console.log('growing pains');
-            }
             return
         },
         isSunk: function() {

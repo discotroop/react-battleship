@@ -5,32 +5,14 @@ import GameLogic from './components/gameBoard';
 const theGame = GameLogic();
 // To Do:
 
-// get game boards to map to DOM
-// get initShips to work
 // make ship layouts random from initShips;
-
-
-// I think I need to go back and change how the board is mapped out.
-// squares need to be a class or at least take props and send info back up to state.
-
-// game is setting "you win" before all the hits are in ... need to fix that. 
-// specifically the ai wins if it's "hit" any ships, not actually sunk
-// might have to fix it in ship.
+// spruce up css to make it pretty
+// change game status message and add button to reset on game end
 
 function App() {
   return (
     <div className="App">
-      <div className="boards">
-        <div> Player 1 (you)
-          <Board player="human" data={theGame.human} />
-        </div>
-        <div> Player 2 (ai)
-          <Board player="ai" data={theGame.ai}/>
-        </div>
-      </div>
-      <div> 
         <Game />
-      </div>
     </div>
   );
 }
@@ -72,14 +54,15 @@ class Game extends React.Component {
 }
 
   humanPlayed() {
-    console.log(this.state.gameData.ai.fleet)
     this.state.gameData.aiPlay(this.state.gameData.aiAttack(), this.state.gameData.aiAttack());
     
     this.checkEndGame();
     this.checkAiPlay();
   }
   render () {
-    return <div> 
+    return <div>
+    <div className="boards"> 
+      <div className="gameStatus"> <h1> {this.state.endGame} </h1> </div>
       <div className = "human">
         <Board 
           player="human" 
@@ -88,8 +71,6 @@ class Game extends React.Component {
         />
       </div>
       <div className="ai" onClick={() => this.humanPlayed()}> 
-      <div> <h1> {this.state.endGame} </h1> </div>
-
         <Board 
           player="ai" 
           data={this.state.gameData.ai}
@@ -97,6 +78,7 @@ class Game extends React.Component {
         />
       </div> 
     </div>
+  </div>
   }
 }
 

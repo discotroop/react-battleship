@@ -9,6 +9,10 @@ const theGame = GameLogic();
 // get initShips to work
 // make ship layouts random from initShips;
 
+
+// I think I need to go back and change how the board is mapped out.
+// squares need to be a class or at least take props and send info back up to state.
+
 function App() {
   return (
     <div className="App">
@@ -47,7 +51,6 @@ class Game extends React.Component {
       if (location === "m") {
         targetDivs[i].classList.add("miss");
       } else if (location === "h") {
-        console.log(targetDivs[i])
         targetDivs[i].classList.add("hit")
       }
   }
@@ -56,9 +59,7 @@ class Game extends React.Component {
   humanPlayed() {
     this.state.gameData.aiPlay(this.state.gameData.aiAttack(), 
       this.state.gameData.aiAttack());
-      //console.log(this.state.gameData.human.board);
     this.checkAiPlay();
-    console.log(this.state.gameData.human.board);
   }
   render () {
     return <div> 
@@ -119,7 +120,7 @@ class Board extends React.Component {
       </div>
   }
   shipSquare(Xcoord, Ycoord, someValue) {
-    return <div className="ship" value={someValue} onClick={(e) => 
+    return <div className="square ship" value={someValue} onClick={(e) => 
       this.squareClicked(e)} 
       key={[Xcoord, Ycoord]} 
       data={[Xcoord,Ycoord]}>

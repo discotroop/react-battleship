@@ -77,7 +77,6 @@ function GameBoard(player) {
             let target = this.board[x][y];
             if (target === "s") {
                 this.hits += 1;
-                target = "h";
                 this.setHit(x, y);
                 this.setHitToShip(x, y);
             } else if (typeof target === "number") {

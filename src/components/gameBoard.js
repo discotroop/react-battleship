@@ -110,7 +110,6 @@ function GameBoard(player) {
             let status = []
             for (let i = 0; i < this.fleet.length; i++) {
                 status.push(this.fleet[i].sunk);
-                console.log(status);
             }
             if (status.includes("N")) {
                 this.fleetStatus = "Y"

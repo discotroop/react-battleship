@@ -7,13 +7,14 @@ function Ship(length) {
         sunk: "N",
         hit: function(position) {
             this.health[position] = "x";
-            console.log("health", this.health);
             this.isSunk();
             return
         },
         isSunk: function() {
-            if (this.health.includes(undefined)) {
-                // console.log("floating")
+            let coordRegex = /\d.\d/g;
+            let matches = this.health.some(e => coordRegex.test(e));
+            if (matches) {
+                this.sunk = "N"
             } else {
                 this.sunk = "Y";
             }

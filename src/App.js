@@ -22,7 +22,6 @@ function App() {
     <div className="App">
       <div className="boards">
         <div> Player 1 (you)
-          {console.log(theGame.human)}
           <Board player="human" data={theGame.human} />
         </div>
         <div> Player 2 (ai)

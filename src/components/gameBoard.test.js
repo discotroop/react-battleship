@@ -112,7 +112,7 @@ test("Ships know where they are on the grid", () => {
 test("It tracks hits on the board", () => {
     sampleBoard.test(0, 1, "s")
     sampleBoard.recievedAttack(0, 1);
-    expect(sampleBoard.board[0][1]).toBe("sh");
+    expect(sampleBoard.board[0][1]).toBe("h");
 });
 test("It tracks misses on the board", () => {
     sampleBoard.recievedAttack(2, 2);
@@ -127,7 +127,7 @@ test("It matches hit counts on the board to ships position", () => {
     
     sampleBoard.placeShip(3, 3, "left", sampleShip)
     sampleBoard.recievedAttack(3, 3);
-    
+
     expect(sampleShip.health[0]).toBe("x");
 });
 test("It matches hit counts on the board to ships position, and ships sink", () => {
@@ -149,6 +149,8 @@ test("Fleet status is 'Y' while a ship is afloat", () => {
 });
 
 test("Fleet status is 'N' when all ships sunk", () => {
+    let sampleGame = theGame();
+    let sampleBoard = sampleGame.human;
     sampleBoard.fleet = [sampleShip];
     sampleBoard.fleet[0].sunk = "Y";
     sampleBoard.hasFleet();
@@ -174,28 +176,6 @@ test("it tracks hit counts on the board", () => {
 
     expect(sampleBoard.hits).toBe(1);
 });
-test("it tracks multiple hit counts on the board", () => {
-    let sampleGame = theGame();
-    let sampleBoard = sampleGame.human;
-
-    sampleBoard.placeShip(0, 1, "down", sampleShip)
-    sampleBoard.recievedAttack(0, 1);
-    sampleBoard.recievedAttack(1, 1);
-
-    expect(sampleBoard.hits).toBe(2);
-});
-test("it checks hit counts against ships total", () => {
-    let sampleGame = theGame();
-    let sampleBoard = sampleGame.human;
-
-    sampleBoard.health = 2;
-    sampleBoard.placeShip(0, 1, "down", sampleShip)
-    sampleBoard.recievedAttack(0, 1);
-    sampleBoard.recievedAttack(1, 1);
-
-    expect(sampleBoard.fleetStatus).toBe("N");
-})
-
 
 // Testing firing mechanisms and game rounds.
 

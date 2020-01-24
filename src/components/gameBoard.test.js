@@ -120,9 +120,19 @@ test("It tracks misses on the board", () => {
 });
 
 /* Tracking hits on Board to ship objects health */
-test("It matches hit counts on the board to ships position", () => {
+test("ship.health is the same as ship.length", () => {
     let sampleGame = theGame();
     let sampleBoard = sampleGame.human;
+    let sampleShip = sampleBoard.fleet[4];
+    
+    sampleBoard.placeShip(3, 3, "left", sampleShip)
+    sampleBoard.recievedAttack(3, 3);
+
+    expect(sampleShip.health.length).toBe(2);
+});
+test("It matches hit counts on the board to ships position", () => {
+    let sampleGame = theGame();
+    let sampleBoard = sampleGame.ai;
     let sampleShip = sampleBoard.fleet[4];
     
     sampleBoard.placeShip(3, 3, "left", sampleShip)
@@ -156,26 +166,6 @@ test("Fleet status is 'N' when all ships sunk", () => {
     sampleBoard.hasFleet();
     expect(sampleBoard.fleetStatus).toBe("N");
 })
-
-
-
-
-
-
-
-
-
-
-/* tracking hit counts, might be absolete if ships works out */
-test("it tracks hit counts on the board", () => {
-    let sampleGame = theGame();
-    let sampleBoard = sampleGame.human;
-
-    sampleBoard.placeShip(0, 1, "down", sampleShip)
-    sampleBoard.recievedAttack(0, 1);
-
-    expect(sampleBoard.hits).toBe(1);
-});
 
 // Testing firing mechanisms and game rounds.
 

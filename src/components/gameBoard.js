@@ -39,12 +39,18 @@ function GameBoard(player) {
         setHit: function (x, y) {
             return this.board[x][y] = "h";
         },
+        shipLengthHack: function () {
+            this.fleet.forEach(function(ship) {
+                ship.health.length = ship.length;
+            })
+        },
         checkShip: function (coords, ship) {
             let health = ship.health;
 
             for (let i=0; i<health.length; i++) {
                 if (health[i] === coords) {
                     ship.hit(i);
+                    this.shipLengthHack();
                 }
             }
             this.hasFleet();
@@ -66,7 +72,6 @@ function GameBoard(player) {
         recievedAttack: function (x, y) {
             let target = this.board[x][y];
             if (target === "s") {
-                this.hits += 1;
                 this.setHit(x, y);
                 this.setHitToShip(x, y);
             } else if (typeof target === "number") {

@@ -72,8 +72,10 @@ class Game extends React.Component {
 }
 
   humanPlayed() {
-    this.state.gameData.aiPlay(this.state.gameData.aiAttack(), 
-      this.state.gameData.aiAttack());
+    console.log(this.state.gameData.ai.fleet)
+    this.state.gameData.aiPlay(this.state.gameData.aiAttack(), this.state.gameData.aiAttack());
+    
+    this.checkEndGame();
     this.checkAiPlay();
   }
   render () {
@@ -171,6 +173,8 @@ class Board extends React.Component {
     }
     return gameGrid;
   }
+  // ai fleet status is somehow going horribly awry, the health array is expanding instead of being replaced.
+
   squareClicked(e, optionalX, optionalY) {
     let that = this;
     let x = e.target.attributes.data.value[0] * 1;
@@ -195,11 +199,6 @@ class Board extends React.Component {
       return;
     } else if (e.target.className === "miss") {
       return;
-    }
-
-    if (boardClicked === "ai") {
-      that.state.currentPlayer = "ai";
-      that.setState({currentPlayer: "ai"});
     }
   }
 

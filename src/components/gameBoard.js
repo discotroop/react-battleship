@@ -38,7 +38,7 @@ function GameBoard(player) {
             return this.board[x][y] = "s";
         },
         setHit: function (x, y) {
-            return this.board[x][y] = "sh";
+            return this.board[x][y] = "h";
         },
         checkShip: function (coords, ship) {
             let health = ship.health;
@@ -77,7 +77,7 @@ function GameBoard(player) {
             let target = this.board[x][y];
             if (target === "s") {
                 this.hits += 1;
-                target = "sh";
+                target = "h";
                 this.setHit(x, y);
                 this.setHitToShip(x, y);
             } else if (typeof target === "number") {
@@ -160,7 +160,7 @@ function theGame() {
         aiPlay: function(x, y) {
     
             let target = this.human.board[x][y]; 
-            if (target === "sh") {
+            if (target === "h") {
                 this.aiPlay(this.aiAttack(), this.aiAttack())
             } else if (target === "m") {
                 this.aiPlay(this.aiAttack(), this.aiAttack())

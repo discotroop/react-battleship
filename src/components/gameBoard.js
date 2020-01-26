@@ -79,6 +79,7 @@ function GameBoard(player) {
             }
             return;
         },
+        //  refactor? 
         legalShipPlacement: function (x, y, direction, ship) {
             let length = ship.length;
             if (direction === "up") {
@@ -101,9 +102,24 @@ function GameBoard(player) {
                 }
                 return result;
             }
+            if (direction === "left") {
+                let result = true;
+                for (let i = y; i > y - length; i--) {
+                    console.log(i);
+                    if (i < 0) {
+                        result = false;
+                        return result;
+                    }
+                }
+                return result;
+            }
         },
 
         placeShip: function (x, y, direction, ship) {
+            let legal = this.legalShipPlacement(x, y, direction, ship)
+            if (legal === false) {
+                return;
+            }
             if (direction === "left") {
                 let end = y - ship.length;
                 for (let i = y; i > end; i--) {
@@ -117,27 +133,18 @@ function GameBoard(player) {
                     ship.health.push(`${x},${i}`)
                 }
             } else if (direction === "up") {
-                let legal = this.legalShipPlacement(x, y, "up", ship)
-                if (legal === false) {
-                    return;
-                } else {
                 let end = x - ship.length;
                 for (let i = x; i > end; i--) {
                     this.setShip(i, y);
                     ship.health.push(`${i},${y}`)
                 }
-            }
             } else if (direction === "down") {
-                let legal = this.legalShipPlacement(x, y, "down", ship)
-                if (legal === false) {
-                    return;
-                } else {
+
                 let end = x + ship.length;
                 for (let i = x; i < end; i++) {
                     this.setShip(i, y);
                     ship.health.push(`${i},${y}`)
                 }
-            }
             }
             return;
         },

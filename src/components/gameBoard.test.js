@@ -4,30 +4,9 @@ import Ship from './ship'
 
 
 let checklist = {
-    // ship factory
-    // 1: "ship includes length, hits and if sunk",
-    // 2: "only test public interface" ,
-    // 3: "ships have a hit() function that takes a number" +
-    //     "and marks it as a hit",
-    // 4: "isSunk() checks if based on length the ship has sunk",
 
-    // Gameboard factory
-    // one: "use tests alone, no DOM or console logs",
     two: "gameboards should place ships at coords by calling ship factory" +
         "sorta work but needs more details",
-    // three: "recievedAttack() should take coords, check if ship is hit, " + 
-    
-    // PROBLEM!
-    // "SEND THE ATTACK TO THE APPROPRIATESHIP" + 
-    // PROBLEM!
-
-    // "or record misses",
-    // four: "should track missed attacks",
-    // five: "gameboards should know if all ships have sunk",
-
-    // create player:
-    i: "players should take turns by attack the others board",
-    ii: "make an ai player to take random shots, should only take legal moves",
 
     // create game loop and DOM module
     a: "at THIS point you can build UI",
@@ -85,6 +64,23 @@ test("ships can be placed in grid going right", () => {
     expect(sampleBoard.board[3][4]).toBe("s");
 });
 
+// Randomizing ship placement and making sure it is legal
+test("ships will not be placed overflowing the top of the board", () => {
+    let sampleGame = theGame();
+    let sampleBoard = sampleGame.human;
+    let sampleShip = Ship(3);
+
+    sampleBoard.placeShip(0, 1, "up", sampleShip)
+    expect(sampleBoard.board[0][1]).toBe(1);
+});
+test("ships will not be placed overflowing the bottom of the board", () => {
+    let sampleGame = theGame();
+    let sampleBoard = sampleGame.human;
+    let sampleShip = Ship(3);
+
+    sampleBoard.placeShip(7, 1, "down", sampleShip)
+    expect(sampleBoard.board[7][1]).toBe(1);
+});
 test.todo("ship placement must be within grid");
 test.todo("ship placement cannot overlap with other ships");
 

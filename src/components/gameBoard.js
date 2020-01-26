@@ -79,6 +79,29 @@ function GameBoard(player) {
             }
             return;
         },
+        legalShipPlacement: function (x, y, direction, ship) {
+            let length = ship.length;
+            if (direction === "up") {
+                let result = true;
+                for (let i = x; i > x - length; i--) {
+                    if (i < 0) {
+                        result = false;
+                        return result;
+                    }
+                }
+                return result;
+            }
+            if (direction === "down") {
+                let result = true;
+                for (let i = x; i < x + length; i++) {
+                    if (i > 7) {
+                        result = false;
+                        return result;
+                    }
+                }
+                return result;
+            }
+        },
 
         placeShip: function (x, y, direction, ship) {
             if (direction === "left") {
@@ -94,19 +117,27 @@ function GameBoard(player) {
                     ship.health.push(`${x},${i}`)
                 }
             } else if (direction === "up") {
+                let legal = this.legalShipPlacement(x, y, "up", ship)
+                if (legal === false) {
+                    return;
+                } else {
                 let end = x - ship.length;
                 for (let i = x; i > end; i--) {
                     this.setShip(i, y);
                     ship.health.push(`${i},${y}`)
-
                 }
+            }
             } else if (direction === "down") {
+                let legal = this.legalShipPlacement(x, y, "down", ship)
+                if (legal === false) {
+                    return;
+                } else {
                 let end = x + ship.length;
                 for (let i = x; i < end; i++) {
                     this.setShip(i, y);
                     ship.health.push(`${i},${y}`)
-
                 }
+            }
             }
             return;
         },

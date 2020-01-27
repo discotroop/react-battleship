@@ -97,7 +97,18 @@ test("ships will not be placed overflowing the left side of the board", () => {
     sampleBoard.placeShip(3, 7, "right", sampleShip)
     expect(sampleBoard.board[3][7]).toBe(7);
 });
-test.todo("ship placement cannot overlap with other ships");
+test("ship placement cannot overlap with other ships", () => {
+    let sampleGame = theGame();
+    let sampleBoard = sampleGame.human;
+    let sampleShip = Ship(3);
+    let secondShip = Ship(4);
+
+    sampleBoard.placeShip(3, 3, "right", sampleShip)
+    sampleBoard.placeShip(4, 3, "up", secondShip)
+    expect(sampleBoard.board[3][3]).toBe("s");
+    expect(sampleBoard.board[4][3]).toBe(3);
+    expect(sampleBoard.board[2][3]).toBe(3);
+});
 
 /* Mapping grid location to ships object */
 test("Ships know where they are on the grid", () => {

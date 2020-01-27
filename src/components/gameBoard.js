@@ -88,6 +88,9 @@ function GameBoard(player) {
                     if (i < 0) {
                         result = false;
                         return result;
+                    } else if (this.board[i][y] === "s") {
+                        result = false;
+                        return result;
                     }
                 }
                 return result;

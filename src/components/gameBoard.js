@@ -83,47 +83,56 @@ function GameBoard(player) {
         legalShipPlacement: function (x, y, direction, ship) {
             let length = ship.length;
             if (direction === "up") {
-                let result = true;
+                let legal = true;
                 for (let i = x; i > x - length; i--) {
                     if (i < 0) {
-                        result = false;
-                        return result;
+                        legal = false;
+                        return legal;
                     } else if (this.board[i][y] === "s") {
-                        result = false;
-                        return result;
+                        legal = false;
+                        return legal;
                     }
                 }
-                return result;
+                return legal;
             }
             if (direction === "down") {
-                let result = true;
+                let legal = true;
                 for (let i = x; i < x + length; i++) {
                     if (i > 7) {
-                        result = false;
-                        return result;
+                        legal = false;
+                        return legal;
+                    } else if (this.board[i][y] === "s") {
+                        legal = false;
+                        return legal;
                     }
                 }
-                return result;
+                return legal;
             }
             if (direction === "left") {
-                let result = true;
+                let legal = true;
                 for (let i = y; i > y - length; i--) {
                     if (i < 0) {
-                        result = false;
-                        return result;
+                        legal = false;
+                        return legal;
+                    } else if (this.board[x][i] === "s") {
+                        legal = false;
+                        return legal;
                     }
                 }
-                return result;
+                return legal;
             }
             if (direction === "right") {
-                let result = true;
+                let legal = true;
                 for (let i = y; i < y + length; i++) {
                     if (i > 7) {
-                        result = false;
-                        return result;
+                        legal = false;
+                        return legal;
+                    } else if (this.board[x][i] === "s") {
+                        legal = false;
+                        return legal;
                     }
                 }
-                return result;
+                return legal;
             }
         },
 
@@ -185,13 +194,13 @@ function theGame() {
         },
         aiAttack: function () {
             let number = this.random()
-            let result = 0;
+            let legalNumber = 0;
             if (number < 8 && number > -1) {
-                result = number;
+                legalNumber = number;
             } else {
-                result = this.aiAttack();
+                legalNumber = this.aiAttack();
             }
-            return result;
+            return legalNumber;
         },
         humanPlay: function (x, y) {
             this.ai.recievedAttack(x, y);

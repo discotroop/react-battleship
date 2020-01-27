@@ -2,10 +2,12 @@ import React from 'react';
 import './App.css';
 import GameLogic from './components/gameBoard';
 
+const newGame = GameLogic();
+
+
 const theGame = GameLogic();
 // To Do:
 
-// make ship layouts random from initShips;
 // spruce up css to make it pretty
 // change game status message and add button to reset on game end
 
@@ -24,6 +26,10 @@ class Game extends React.Component {
       gameData: theGame,
       endGame: "no way hosea",
     }
+    this.handleButtonClick=this.handleButtonClick.bind(this);
+  }
+  handleButtonClick() {
+    window.location.reload();
   }
   checkEndGame() {
     if (this.state.gameData.human.fleetStatus === "N") {
@@ -62,7 +68,10 @@ class Game extends React.Component {
   render () {
     return <div>
     <div className="boards"> 
-      <div className="gameStatus"> <h1> {this.state.endGame} </h1> </div>
+      <div className="gameStatus"> 
+        <h1> {this.state.endGame} </h1>
+        <button onClick={() => this.handleButtonClick()}> New Game </button>
+       </div>
       <div className = "human">
         <Board 
           player="human" 
@@ -133,29 +142,7 @@ class Board extends React.Component {
           this.shipRandomizer(),
           this.directionRandomizer(), fleet[i])
       }
-      console.log(fleet);
     }
-    // console.log(this.state);
-    // if (this.state.player === "human") {
-    //   // while fleet[0].health.length < 1 
-    //   console.log(fleet[0])
-    //   this.state.gameBoard.placeShip(
-    //     this.shipRandomizer(), this.shipRandomizer(), "right", fleet[0])
-    //   this.state.gameBoard.placeShip(
-    //     this.shipRandomizer(), this.shipRandomizer(), "right", fleet[1])
-    //   this.state.gameBoard.placeShip(
-    //     this.shipRandomizer(), this.shipRandomizer(), "left", fleet[2])
-    //   this.state.gameBoard.placeShip(
-    //     this.shipRandomizer(), this.shipRandomizer(), "up", fleet[3])
-    //   this.state.gameBoard.placeShip(
-    //     this.shipRandomizer(), this.shipRandomizer(), "down", fleet[4])
-    // } else {
-    //   this.state.gameBoard.placeShip(1, 1, "down", fleet[0])
-    //   this.state.gameBoard.placeShip(7, 7, "up", fleet[1])
-    //   this.state.gameBoard.placeShip(1, 5, "left", fleet[2])
-    //   this.state.gameBoard.placeShip(5, 3, "up", fleet[3])
-    //   this.state.gameBoard.placeShip(4, 6, "down", fleet[4])
-    // }
   }
 
   square(Xcoord, Ycoord, someValue) {
@@ -203,10 +190,8 @@ class Board extends React.Component {
     }
     return gameGrid;
   }
-  // ai fleet status is somehow going horribly awry, the health array is expanding instead of being replaced.
 
-  squareClicked(e, optionalX, optionalY) {
-    let that = this;
+  squareClicked(e) {
     let x = e.target.attributes.data.value[0] * 1;
     let y = e.target.attributes.data.value[2] * 1;
 

@@ -94,39 +94,68 @@ class Board extends React.Component {
   random() {
     return Math.round(Math.random() * 10);
   }
-  shipRandomizer() {
+  legalCoord() {
       let number = this.random()
       let legalNumber = 0;
       if (number < 8 && number > -1) {
           legalNumber = number;
       } else {
-          legalNumber = this.shipRandomizer();
+          legalNumber = this.legalCoord();
       }
       return legalNumber;
   }
+  shipRandomizer() {
+    return this.legalCoord();
+  }
+  directionRandomizer() {
+    let num = this.legalCoord();
+    if (num <= 1) {
+      return "right"
+    } else if (num <= 3) {
+      return "left"
+    } else if (num <= 5) {
+      return "up"
+    } else if (num <= 7) {
+      return "down"
+    } else {
+      return "right";
+    }
+  }
+
   
   // temporary non-random set up
   initShips() {
     let fleet = this.state.gameBoard.fleet;
-    console.log(this.state);
-    if (this.state.player === "human") {
-      this.state.gameBoard.placeShip(
-        this.shipRandomizer(), this.shipRandomizer(), "right", fleet[0])
-      this.state.gameBoard.placeShip(
-        this.shipRandomizer(), this.shipRandomizer(), "right", fleet[1])
-      this.state.gameBoard.placeShip(
-        this.shipRandomizer(), this.shipRandomizer(), "left", fleet[2])
-      this.state.gameBoard.placeShip(
-        this.shipRandomizer(), this.shipRandomizer(), "up", fleet[3])
-      this.state.gameBoard.placeShip(
-        this.shipRandomizer(), this.shipRandomizer(), "down", fleet[4])
-    } else {
-      this.state.gameBoard.placeShip(1, 1, "down", fleet[0])
-      this.state.gameBoard.placeShip(7, 7, "up", fleet[1])
-      this.state.gameBoard.placeShip(1, 5, "left", fleet[2])
-      this.state.gameBoard.placeShip(5, 3, "up", fleet[3])
-      this.state.gameBoard.placeShip(4, 6, "down", fleet[4])
+    for (let i = 0; i < fleet.length; i++) {
+      while (fleet[i].health.length < 1) {
+        this.state.gameBoard.placeShip(
+          this.shipRandomizer(),
+          this.shipRandomizer(),
+          this.directionRandomizer(), fleet[i])
+      }
+      console.log(fleet);
     }
+    // console.log(this.state);
+    // if (this.state.player === "human") {
+    //   // while fleet[0].health.length < 1 
+    //   console.log(fleet[0])
+    //   this.state.gameBoard.placeShip(
+    //     this.shipRandomizer(), this.shipRandomizer(), "right", fleet[0])
+    //   this.state.gameBoard.placeShip(
+    //     this.shipRandomizer(), this.shipRandomizer(), "right", fleet[1])
+    //   this.state.gameBoard.placeShip(
+    //     this.shipRandomizer(), this.shipRandomizer(), "left", fleet[2])
+    //   this.state.gameBoard.placeShip(
+    //     this.shipRandomizer(), this.shipRandomizer(), "up", fleet[3])
+    //   this.state.gameBoard.placeShip(
+    //     this.shipRandomizer(), this.shipRandomizer(), "down", fleet[4])
+    // } else {
+    //   this.state.gameBoard.placeShip(1, 1, "down", fleet[0])
+    //   this.state.gameBoard.placeShip(7, 7, "up", fleet[1])
+    //   this.state.gameBoard.placeShip(1, 5, "left", fleet[2])
+    //   this.state.gameBoard.placeShip(5, 3, "up", fleet[3])
+    //   this.state.gameBoard.placeShip(4, 6, "down", fleet[4])
+    // }
   }
 
   square(Xcoord, Ycoord, someValue) {

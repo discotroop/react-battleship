@@ -91,16 +91,35 @@ class Board extends React.Component {
       gridInterface: [],
     }
   }
-
+  random() {
+    return Math.round(Math.random() * 10);
+  }
+  shipRandomizer() {
+      let number = this.random()
+      let legalNumber = 0;
+      if (number < 8 && number > -1) {
+          legalNumber = number;
+      } else {
+          legalNumber = this.shipRandomizer();
+      }
+      return legalNumber;
+  }
+  
   // temporary non-random set up
   initShips() {
     let fleet = this.state.gameBoard.fleet;
+    console.log(this.state);
     if (this.state.player === "human") {
-      this.state.gameBoard.placeShip(1, 1, "right", fleet[0])
-      this.state.gameBoard.placeShip(3, 1, "right", fleet[1])
-      this.state.gameBoard.placeShip(6, 3, "left", fleet[2])
-      this.state.gameBoard.placeShip(7, 7, "up", fleet[3])
-      this.state.gameBoard.placeShip(4, 6, "down", fleet[4])
+      this.state.gameBoard.placeShip(
+        this.shipRandomizer(), this.shipRandomizer(), "right", fleet[0])
+      this.state.gameBoard.placeShip(
+        this.shipRandomizer(), this.shipRandomizer(), "right", fleet[1])
+      this.state.gameBoard.placeShip(
+        this.shipRandomizer(), this.shipRandomizer(), "left", fleet[2])
+      this.state.gameBoard.placeShip(
+        this.shipRandomizer(), this.shipRandomizer(), "up", fleet[3])
+      this.state.gameBoard.placeShip(
+        this.shipRandomizer(), this.shipRandomizer(), "down", fleet[4])
     } else {
       this.state.gameBoard.placeShip(1, 1, "down", fleet[0])
       this.state.gameBoard.placeShip(7, 7, "up", fleet[1])

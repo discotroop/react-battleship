@@ -5,12 +5,23 @@ Classic game of battleship written in React and tested with Jest.
 You can see a demo video here. (link)
 You can play around with the site here. (link)
 
-This project is currently at an MVP for playing one round of the game.
+1.26.2020 
+The Project is currently at an MVP for playing multiple games.
+
+Features:
+1. Randomized ship placement for human and AI
+2. Randomized AI play
+3. Response message for winning or losing.
 
 TBD:
-1. Randomize ship placement for user and computer.
-2. Spruce up the CSS and layout.
-3. Add a button to start a new game without page refresh.
+1. Change new game button to not do a page refresh.
+    a. write functionality in gameBoard
+    b. test it
+    c. allow react to set state from it.
+    d. profit?
+2. Stylize css/layout
+3. Clean up code and refactor as needed.
+4. Organize code into more sensible components
 
 
 

@@ -105,8 +105,17 @@ function GameBoard(player) {
             if (direction === "left") {
                 let result = true;
                 for (let i = y; i > y - length; i--) {
-                    console.log(i);
                     if (i < 0) {
+                        result = false;
+                        return result;
+                    }
+                }
+                return result;
+            }
+            if (direction === "right") {
+                let result = true;
+                for (let i = y; i < y + length; i++) {
+                    if (i > 7) {
                         result = false;
                         return result;
                     }

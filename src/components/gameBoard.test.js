@@ -85,11 +85,17 @@ test("ships will not be placed overflowing the left side of the board", () => {
     let sampleGame = theGame();
     let sampleBoard = sampleGame.human;
     let sampleShip = Ship(3);
-    console.log(sampleBoard.board)
 
     sampleBoard.placeShip(3, 1, "left", sampleShip)
-    console.log(sampleBoard.board)
     expect(sampleBoard.board[3][1]).toBe(1);
+});
+test("ships will not be placed overflowing the left side of the board", () => {
+    let sampleGame = theGame();
+    let sampleBoard = sampleGame.human;
+    let sampleShip = Ship(3);
+
+    sampleBoard.placeShip(3, 7, "right", sampleShip)
+    expect(sampleBoard.board[3][7]).toBe(7);
 });
 test.todo("ship placement cannot overlap with other ships");
 

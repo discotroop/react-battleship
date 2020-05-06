@@ -2,8 +2,8 @@ React Battleship.
 
 Classic game of battleship written in React and tested with Jest. 
 
-You can see a demo video here. (link)
-You can play around with the site here. (link)
+You can see a demo video here. (link tbd)
+You can play around with the site here. (https://discotroop.github.io/react-battleship/)
 
 1.26.2020 
 The Project is currently at an MVP for playing multiple games.
@@ -14,6 +14,7 @@ Features:
 3. Response message for winning or losing.
 
 TBD:
+!!!FIX AI!!!
 1. Change new game button to not do a page refresh.
     a. write functionality in gameBoard
     b. test it
